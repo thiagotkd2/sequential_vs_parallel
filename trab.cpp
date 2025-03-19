@@ -21,51 +21,102 @@ int main()
     }
 
     for (int i = 0; i < tamanho; i++) {
-        int *row = *(matriz + i);
+        int *linha = *(matriz + i);
         for (int j = 0; j < tamanho; j++) {
-            *(row + j) = rand() % 256;
-            cout<<*(row + j)<<'\n';
+            *(linha + j) = rand() % 256;
+            if(j==tamanho-1)
+                cout<<*(linha + j);
+            else
+                cout<<*(linha + j)<<',';
+        }
+        cout<<'\n';
+    }
+    cout<<'\n';
+
+    int **temp_matriz = (int **) malloc(sizeof(int*) * tamanho);
+    for (int i = 0; i < tamanho; i++) {
+        temp_matriz[i] = (int *) malloc(tamanho * sizeof(int));
+    }
+
+    // Copy the content from matriz to temp_matriz
+    for (int i = 0; i < tamanho; i++) {
+        for (int j = 0; j < tamanho; j++) {
+            temp_matriz[i][j] = matriz[i][j];
         }
     }
-    
+
+
+
+    /*
+     * *30 *20 *10
+     * *15 25 *40
+     * *16 *3 *29
+     *
+     */
+
     
     for (int i = 0; i < tamanho; i++) {
-        int *row = *(matriz + i);
+        int *linha = *(matriz + i);
+        int *linha_temp = *(temp_matriz+1)
 
         for (int j = 0; j < tamanho; j++) {
 		    int soma = 0;
-		    int numero_elementos = 0
-		    if(row+1){
-//		    	soma, numero_elementos++;
+		    int numero_elementos = 0;
+
+		    if(j+1<tamanho){
+                numero_elementos++;
+                soma+=*(linha+j+1);
 		    }
-		    if(row-1){
-		    	
+		    if(j-1>=0){
+                numero_elementos++;
+                soma+=*(linha+j-1);
 		    }
-		    if(row+tamanho){
-		    	
+		    if(i+1<tamanho){
+                numero_elementos++;
+                soma+=*(*(matriz+i+1)+j);
 		    }
-		    if(row-tamanho){
-		    	
+		    // mesma coisa que int *linha = *(matriz + i-1);
+		    // no entanto, nao podemos redefinir o valor de linha
+		    if(i-1>=0){
+                numero_elementos++;
+                soma += *(*(matriz+i-1)+j);
 		    }
-		    if(row+tamanho+1){
-		    	
+		    if(j+1<tamanho && i+1<tamanho){
+		    	numero_elementos++;
+                soma += *(*(matriz+i+1)+j+1);
 		    }
-		    if(row-tamanho+1){
-		    	
+		    if(j+1<tamanho && i-1>=0){
+		    	numero_elementos++;
+                soma += *(*(matriz+i-1)+j+1);
 		    }
-		    if(row+tamanho-1){
-		    	
+		    if(j-1>=0 && i+1<tamanho){
+		    	numero_elementos++;
+                soma += *(*(matriz+i+1)+j-1);
 		    }
 		    
-		    if(row+tamanho-1){
-		    	
+		    if(j-1>=0 && i-1>=0){
+		    	numero_elementos++;
+                soma += *(*(matriz+i-1)+j-1);
 		    }
 		    
-		    
-	        *(row + j) = (row +1)
+
+	        *(linha + j) = soma/numero_elementos;
             
         }
     }
+
+
+
+
+    for (int i = 0; i < tamanho; i++) {
+        int *linha = *(matriz + i);
+        for (int j = 0; j < tamanho; j++) {
+            cout<<*(linha + j)<<',';
+
+        }
+        cout<<'\n';
+    }
+
     
     
     /*for(p_i = (int *) matriz; p_i< (int*)matriz+(tamanho*tamanho); p_i++){
